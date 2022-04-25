@@ -21,6 +21,42 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
+-- Name: grades; Type: TABLE; Schema: public; Owner: lunalim
+--
+
+CREATE TABLE public.grades (
+    id integer NOT NULL,
+    student_github character varying(50),
+    project_title character varying(50),
+    grade character varying(30)
+);
+
+
+ALTER TABLE public.grades OWNER TO lunalim;
+
+--
+-- Name: grades_id_seq; Type: SEQUENCE; Schema: public; Owner: lunalim
+--
+
+CREATE SEQUENCE public.grades_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.grades_id_seq OWNER TO lunalim;
+
+--
+-- Name: grades_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: lunalim
+--
+
+ALTER SEQUENCE public.grades_id_seq OWNED BY public.grades.id;
+
+
+--
 -- Name: projects; Type: TABLE; Schema: public; Owner: lunalim
 --
 
@@ -93,6 +129,13 @@ ALTER SEQUENCE public.students_id_seq OWNED BY public.students.id;
 
 
 --
+-- Name: grades id; Type: DEFAULT; Schema: public; Owner: lunalim
+--
+
+ALTER TABLE ONLY public.grades ALTER COLUMN id SET DEFAULT nextval('public.grades_id_seq'::regclass);
+
+
+--
 -- Name: projects id; Type: DEFAULT; Schema: public; Owner: lunalim
 --
 
@@ -104,6 +147,17 @@ ALTER TABLE ONLY public.projects ALTER COLUMN id SET DEFAULT nextval('public.pro
 --
 
 ALTER TABLE ONLY public.students ALTER COLUMN id SET DEFAULT nextval('public.students_id_seq'::regclass);
+
+
+--
+-- Data for Name: grades; Type: TABLE DATA; Schema: public; Owner: lunalim
+--
+
+COPY public.grades (id, student_github, project_title, grade) FROM stdin;
+1	jhacks	Markov	10
+2	jhacks	Blockly	2
+3	sdevelops	Markov	50
+\.
 
 
 --
@@ -130,6 +184,13 @@ COPY public.students (id, first_name, last_name, github) FROM stdin;
 
 
 --
+-- Name: grades_id_seq; Type: SEQUENCE SET; Schema: public; Owner: lunalim
+--
+
+SELECT pg_catalog.setval('public.grades_id_seq', 3, true);
+
+
+--
 -- Name: projects_id_seq; Type: SEQUENCE SET; Schema: public; Owner: lunalim
 --
 
@@ -141,6 +202,14 @@ SELECT pg_catalog.setval('public.projects_id_seq', 5, true);
 --
 
 SELECT pg_catalog.setval('public.students_id_seq', 2, true);
+
+
+--
+-- Name: grades grades_pkey; Type: CONSTRAINT; Schema: public; Owner: lunalim
+--
+
+ALTER TABLE ONLY public.grades
+    ADD CONSTRAINT grades_pkey PRIMARY KEY (id);
 
 
 --
